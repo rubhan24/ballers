@@ -4,7 +4,7 @@ from django.utils import timezone
 
 class Area(models.Model):
     options = (
-         ('north london', 'North London'),
+        ('north london', 'North London'),
         ('west london', 'West London'),
         ('south london', 'South London'),
         ('east london', 'East London')
@@ -36,6 +36,6 @@ class Post(models.Model):
     class Meta:
         ordering = ('-published' ,)
 
-        def __str__(self):
-            return self.time
+    def __str__(self):
+        return self.time
 
