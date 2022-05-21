@@ -1,0 +1,43 @@
+.single-game {
+  margin-top: 30%;
+  max-width: 90%;
+  margin-inline: auto;
+}
+
+.player-username {
+  font-size: 25px;
+}
+
+.single-time {
+  font-size: 20px;
+}
+
+.single-area {
+  font-size: 20px;
+}
+
+.single-difficulty {
+  font-size: 20px;
+}
+
+.single-description {
+  font-size: 20px;
+}
+
+.single-players-needed {
+  font-size: 20px;
+}
+
+.single-join-btn {
+  margin-top: 10px;
+}
+
+.single-chat-btn {
+  margin-top: 10px;
+}
+.button-grid {
+  max-width: 15%;
+  display: flex;
+  flex-direction: column;
+  margin-inline: auto;
+}
