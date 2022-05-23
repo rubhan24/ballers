@@ -1,7 +1,7 @@
 from email import message
 from rest_framework import generics 
 from sesh.models import Post
-from .serializers import PostSerializer
+from .serializers import PostSerializer, UpdateSerializer
 from rest_framework.permissions import SAFE_METHODS, BasePermission, IsAdminUser, DjangoModelPermissionsOrAnonReadOnly, IsAuthenticated, AllowAny
 from rest_framework import viewsets
 from rest_framework import filters
@@ -9,6 +9,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 import django_filters
+
+from session_api import serializers
 
 class PostUserWritePermission(BasePermission):
     message = 'Editing posts is restricted to the creator of this session.'
@@ -19,7 +21,6 @@ class PostUserWritePermission(BasePermission):
             return True
 
         return obj.player == request.user
-
 
 class PostList(generics.ListCreateAPIView):
     permission_classes = [AllowAny]
@@ -42,13 +43,13 @@ class PostDetail(generics.RetrieveUpdateAPIView):
         print(id)
         return Post.objects.filter(id=id)
 
-class PostDelete(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [PostUserWritePermission]
-    serializer_class = PostSerializer
-    def get_queryset(self):
-        id = self.kwargs['pk']
-        print(id)
-        return Post.objects.delete(id=id)
+# class PostDelete(generics.RetrieveUpdateDestroyAPIView):
+#     permission_classes = [PostUserWritePermission]
+#     serializer_class = PostSerializer
+#     def get_queryset(self):
+#         id = self.kwargs['pk']
+#         print(id)
+#         return Post.objects.delete(id=id)
 
 class PostListDetailfilter(generics.ListAPIView):
    queryset = Post.objects.all()
@@ -56,7 +57,27 @@ class PostListDetailfilter(generics.ListAPIView):
    filter_backends = [filters.SearchFilter]
    search_fields = ['^area', '=difficulty']
 
+#POST
+class CreatePost(generics.CreateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
+class EditPost(generics.RetrieveUpdateAPIView):
+    class Meta:
+        fields = ['players_needed']
+    permission_classes = [IsAuthenticated]
+    serializer_class = UpdateSerializer
+    queryset = Post.objects.all()
+
+
+class DeletePost(generics.RetrieveDestroyAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = PostSerializer
+    def get_queryset(self):
+        id = self.kwargs['pk']
+        print(id)
+        return Post.objects.filter(id=id)
 
 # THIS WORKS
 # class PostList(viewsets.ModelViewSet):
