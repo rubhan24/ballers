@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home";
 import CreateSesh from "./pages/CreateSesh/CreateSesh";
 import SingleSesh from "./components/SingleSesh/SingleSesh";
 import Filter from "./components/Filter/Filter";
+import Chat from "./pages/Chat/Chat";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route index path="/view-profile" element={<ViewProfile />} />
           <Route index path="/home" element={<Home />} />
           <Route index path="/create-session" element={<CreateSesh />} />
+          <Route index path="/Chat" element={<Chat />} />
           <Route index path="/session/:id" element={<SingleSesh />} />
           <Route
             index

@@ -51,6 +51,7 @@ function Home() {
           <button onClick={() => navigate("/create-session")}>
             + Make Sesh
           </button>
+          <button onClick={() => navigate("/Chat")}>Chat</button>
         </div>
 
         <div className="filter-grid hidden">
