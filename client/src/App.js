@@ -9,6 +9,7 @@ import CreateSesh from "./pages/CreateSesh/CreateSesh";
 import SingleSesh from "./components/SingleSesh/SingleSesh";
 import Filter from "./components/Filter/Filter";
 import Chat from "./pages/Chat/Chat";
+import Filter from "./pages/FilterPage/FilterPage";
 
 function App() {
   return (
