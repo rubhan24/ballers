@@ -3,6 +3,11 @@ import axiosInstance from "../../axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./styles.css";
+import chatLogo from "../../images/chat.png";
+import joinLogo from "../../images/join-button.png";
+import unJoinLogo from "../../images/unjoin-button.png";
+import deletePostLogo from "../../images/delete-post.png";
+import sessionDetailsLogo from "../../images/session-details.png";
 
 function SingleSesh() {
   const { id } = useParams();
@@ -36,7 +41,7 @@ function SingleSesh() {
   //JOIN FUNCTIONALITY
   const [clicked, setClicked] = useState(false);
   const joinHandlerFalse = (e) => {
-    const joinBtn = document.querySelector(".single-join-btn ");
+    const joinBtn = document.querySelector(".single-join-btn");
     joinBtn.textContent = "Unjoin";
     e.preventDefault();
     axiosInstance
@@ -56,7 +61,7 @@ function SingleSesh() {
       });
   };
   const joinHandlerTrue = (e) => {
-    const joinBtn = document.querySelector(".single-join-btn ");
+    const joinBtn = document.querySelector(".single-join-btn");
     joinBtn.textContent = "Join";
     axiosInstance
       .put(`edit/${id}/`, {
@@ -79,57 +84,73 @@ function SingleSesh() {
     e.preventDefault();
     axiosInstance.delete(`delete/${id}/`).then(() => navigate("/home"));
   };
+
   if (!loading) {
     return (
       <>
         <Navbar />
+        <img
+          src={sessionDetailsLogo}
+          alt="session details"
+          className="session-details"
+        />
         <div className={`single-game ${data.posts.id}`}>
           <div>
-            <h2 className="player-username">{data.posts.player.username}</h2>
-            <h2 className="single-time">Time: {data.posts.time}</h2>
+            <h2 className="player-username">{`${data.posts.player.username}'s session`}</h2>
+            <h2 className="single-time">Time: <p className="highlight">{data.posts.time}</p></h2>
           </div>
-          <h2 className="single-area">Area: {data.posts.area}</h2>
+          <h2 className="single-area">Area: <p className="highlight">{data.posts.area}</p></h2>
           <h2 className="single-difficulty">
-            Difficulty: {data.posts.difficulty}
+            Difficulty: <p className="highlight">{data.posts.difficulty}</p>
           </h2>
           <h2 className="single-players-needed">
-            Players Needed: {data.posts.players_needed}
+            Players Needed: <p className="highlight">{data.posts.players_needed}</p>
           </h2>
           <h2 className="single-description">
-            Description: {data.posts.description}
+            Description: <p className="highlight">{data.posts.description}</p>
           </h2>
           <div className="button-grid">
-            <button
+            <img
+              src={clicked ? unJoinLogo : joinLogo}
+              onClick={
+                data.posts.players_needed === 0 && !clicked
+                  ? null
+                  : data.posts.players_needed === 0 && clicked
+                  ? joinHandlerTrue
+                  : clicked
+                  ? joinHandlerTrue
+                  : joinHandlerFalse
+              }
+              id="join-btn"
               className={`single-join-btn ${data.posts.id} ${
                 userData.properUsername === data.posts.player.username
                   ? "hidden"
                   : ""
+              } ${
+                data.posts.players_needed === 0 && clicked
+                  ? null
+                  : data.posts.players_needed === 0
+                  ? "full-session"
+                  : ""
               }`}
-              onClick={clicked ? joinHandlerTrue : joinHandlerFalse}
-              disabled={
-                data.posts.players_needed === 0 && clicked === false
-                  ? true
-                  : false
-              }
-            >
-              Join
-            </button>
-            <button
-              className={`single-chat-btn chat-${data.posts.id}`}
+              alt="join or unjoin logo"
+            />
+            <img
+              src={chatLogo}
+              alt="chat logo"
               onClick={() => navigate(`/session/chat/${data.posts.id}`)}
-            >
-              Chat
-            </button>
-            <button
+              className="chat-logo-btn"
+            />
+            <img
+              src={deletePostLogo}
+              alt="delete post"
               className={`single-delete-btn ${data.posts.id} ${
                 userData.properUsername === data.posts.player.username
                   ? ""
                   : "hidden"
               }`}
               onClick={deleteHandler}
-            >
-              Delete Post
-            </button>
+            />
           </div>
         </div>
       </>

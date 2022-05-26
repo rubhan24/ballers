@@ -2,21 +2,25 @@
   display: none;
 }
 
+.login-header {
+  padding-top: 15%;
+  display: flex;
+  max-width: 70%;
+  margin-inline: auto;
+}
 .login-body {
   background: linear-gradient(to top left, rgb(89, 65, 225), rgb(96, 87, 142));
   height: 100vh;
 }
 
-.home-title {
-  padding-top: 10%;
-}
 .home-logo {
   max-width: 100%;
-  margin-top: 35%;
+  margin-top: 20%;
   opacity: 80%;
 }
 
 .btn-grid {
+  margin-top: 10%;
   max-width: 60%;
   margin-inline: auto;
   opacity: 80%;
@@ -29,4 +33,30 @@
 .register-btn {
   max-width: 100px;
   margin-left: 10%;
+}
+.input-form {
+  display: grid;
+  max-width: 40%;
+  margin-inline: auto;
+}
+#login-username {
+  margin-top: 5px;
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid white;
+  border-radius: 5px;
+  text-align: center;
+}
+#login-password {
+  margin-top: 5px;
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#login-username::placeholder {
+  color: rgba(255, 255, 255, 0.705);
+}
+#login-password::placeholder {
+  color: rgba(255, 255, 255, 0.705);
 }
